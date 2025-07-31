@@ -20,21 +20,22 @@ export default function Cart() {
   }
 
   return (
-    <div>
-      <h2>Ваша корзина</h2>
-      <div >
-        {items.map((item) => (
-          <CartItem key={item.id} product={item} />
-        ))}
-      </div>
-      <div>
-        <p>Итого: {total} ₸</p>
-        <button
-          onClick={() => dispatch(clearCart())}
-        >
-          Очистить корзину
-        </button>
-      </div>
+    <div className="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
+        <h2 className="text-2xl font-bold mb-4">Ваша корзина</h2>
+        <div className="space-y-3">
+            {items.map((item) => (
+            <CartItem key={item.id} product={item} />
+            ))}
+        </div>
+        <div className="flex items-center justify-between mt-6">
+            <p className="text-xl font-semibold">Итого: {total} ₸</p>
+            <button
+                onClick={() => dispatch(clearCart())}
+                className="text-red-500 hover:underline"
+            >
+                Очистить корзину
+            </button>
+        </div>
     </div>
   );
 }

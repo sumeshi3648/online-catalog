@@ -24,28 +24,31 @@ export default function CartItem({ product }: Props) {
   };
 
   return (
-    <div>
-      <div>
-        <img
-          src={product.image}
-          alt={product.name}
-        />
-        <div>
-          <h3 className="font-medium">{product.name}</h3>
-          <p className="text-sm text-gray-600">{product.price} ₸</p>
-        </div>
+    <div className="flex items-center justify-between py-3 border-b">
+        <div className="flex items-center gap-4">
+            <img
+                src={product.image}
+                alt={product.name}
+                className="w-16 h-16 object-cover rounded"
+            />
+            <div>
+                <h3 className="font-medium">{product.name}</h3>
+                <p className="text-sm text-gray-600">{product.price} ₸</p>
+            </div>
       </div>
-      <div>
+      <div className="flex items-center gap-2">
         <input
-          type="number"
-          value={product.quantity}
-          onChange={handleChange}
-          min={1}
+            type="number"
+            value={product.quantity}
+            onChange={handleChange}
+            className="w-16 text-center border rounded p-1"
+            min={1}
         />
         <button
-          onClick={handleRemove}
+            onClick={handleRemove}
+            className="text-red-500 hover:underline text-sm"
         >
-          Удалить
+            Удалить
         </button>
       </div>
     </div>
