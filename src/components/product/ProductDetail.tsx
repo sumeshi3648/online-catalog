@@ -58,6 +58,7 @@ export default function ProductDetail({ product }: Props) {
           <p className="text-lg font-semibold text-blue-600">{product.price} ₸</p>
 
           <div className="text-sm text-gray-600 space-y-1">
+            <p>Категория: {product.category}</p>
             <p>
               Статус:{' '}
               <span className={product.inStock ? 'text-green-600' : 'text-red-500'}>

@@ -7,6 +7,7 @@ export const mockProducts: Product[] = [
     image: 'https://res.cloudinary.com/dugqffkal/image/upload/v1753943887/greenLine_yzavz0.jpg',
     price: 129900,
     description: 'Квартира с ремонтом в центре Астаны',
+    category: 'Квартиры',
 
     details: 'MORE DETAILS ABOUT PRODUCT',
     features: ['65 кв.м', '2 комнаты', '4 этаж', 'Центральное отопление'],
@@ -24,6 +25,7 @@ export const mockProducts: Product[] = [
     image: 'https://res.cloudinary.com/dugqffkal/image/upload/v1753943888/grandTuran_qhlkj9.jpg',
     price: 99900,
     description: 'Парковочное место в ЖК Grand Turan Business',
+    category: 'Паркинг',
 
     details: 'MORE DETAILS ABOUT PARKING',
     features: ['18 кв.м', 'Подземный паркинг', 'Видеонаблюдение 24.7'],
@@ -42,6 +44,7 @@ export const mockProducts: Product[] = [
     image: 'https://res.cloudinary.com/dugqffkal/image/upload/v1753943902/remont_yvizsj.jpg',
     price: 199900,
     description: 'Смарт ремонт с выбором дизайна через приожение',
+    category: 'Ремонт',
 
     details: 'MORE DETAILS ABOUT PRODUCT',
     features: ['Срок ремонта: 30 дней', 'Выбор из 5 дизайнов', 'Гарантия 2 года'],
