@@ -15,12 +15,21 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addToCart(state, action: PayloadAction<Product>) { //payload defines data about the product
+        addToCart(state, action: PayloadAction<CartItem>) { //payload defines data about the product
             const existingItem = state.items.find((item) => item.id === action.payload.id); //search for item where item.id is equal tro id of an incoming product
             if (existingItem) {
-                existingItem.quantity += 1;
+                const max = existingItem.maxQty ?? 1;
+                const totalQuantity = existingItem.quantity + action.payload.quantity;
+
+                if (totalQuantity > max) {
+                    existingItem.quantity = max;
+                } else {
+                    existingItem.quantity = totalQuantity;
+                }
             } else {
-                state.items.push({ ...action.payload, quantity: 1});
+                const max = action.payload.maxQty ?? 1;
+                const quantity = Math.min(action.payload.quantity, max);
+                state.items.push({ ...action.payload, quantity });
             }
         },
 
@@ -30,8 +39,9 @@ const cartSlice = createSlice({
 
         updateQuantity(state, action: PayloadAction<{id: number; quantity: number}>) {
             const existingItem = state.items.find((item) => item.id === action.payload.id); //search for item where item.id is equal tro id of an incoming product
-            if (existingItem && action.payload.quantity > 0) {
-                existingItem.quantity = action.payload.quantity;
+            if (existingItem) {
+                const max = existingItem.maxQty ?? 1;
+                existingItem.quantity = Math.min(action.payload.quantity, max);
             }
         },
         clearCart(state) {
