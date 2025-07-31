@@ -1,9 +1,12 @@
 'use client';
 
-import { mockProducts } from '@/utils/mockProducts';
 import ProductCard from './ProductCard';
 import { useSearchParams } from 'next/navigation';
 import FilterPanel from './FilterPanel';
+
+import { useGetProductsQuery } from '@/services/api';
+import { toast } from 'react-toastify';
+
 
 export default function ProductList() {
   const searchParams = useSearchParams();
@@ -12,7 +15,14 @@ export default function ProductList() {
   const maxPrice = parseFloat(searchParams.get('maxPrice') || '10000000');
   const inStock = searchParams.get('inStock') === 'true';
 
-  const filteredProducts = mockProducts.filter((product) => {
+  const { data: products, isLoading, error } = useGetProductsQuery();
+  if (isLoading) return <div>Загрузка товаров</div>;
+  if (error) {
+    toast.error('Ощибка загрузки товаров');
+    return <div>не удалось загрузить товары</div>
+  }
+
+  const filteredProducts = (products || []).filter((product) => {
     const matchCategory = category ? product.category === category : true;
     const matchMin = isNaN(minPrice) || product.price >= minPrice;
     const matchMax = isNaN(maxPrice) || product.price <= maxPrice;

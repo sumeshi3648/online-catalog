@@ -1,12 +1,17 @@
+'use client';
+
+import { useGetProductsQuery } from '@/services/api';
 import ProductDetail from '@/components/product/ProductDetail';
-import { mockProducts } from '@/utils/mockProducts';
+import { useParams } from 'next/navigation';
 
-type Params = {
-  params: { id: string };
-};
+export default function ProductPage() {
+  const { id } = useParams();
+  const { data: products, isLoading, error } = useGetProductsQuery();
 
-export default function ProductPage({ params }: Params) {
-  const product = mockProducts.find((p) => p.id === Number(params.id));
+  if (isLoading) return <div className="text-center py-10">Загрузка товара...</div>;
+  if (error) return <div className="text-center text-red-500 py-10">Ошибка загрузки товара</div>;
+
+  const product = products?.find((p) => p.id === Number(id));
 
   if (!product) {
     return <div className="text-center text-red-500 py-10">Товар не найден</div>;

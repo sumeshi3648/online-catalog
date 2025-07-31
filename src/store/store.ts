@@ -3,8 +3,11 @@ import cartReducer from '@/features/cart/cartSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+import { api } from '@/services/api';
+
 const rootReducer = combineReducers({
   cart: cartReducer,
+  [api.reducerPath]: api.reducer,
 });
 
 const persistConfig = {
@@ -20,8 +23,8 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // 🛠️ отключаем сериализуемую проверку
-    }),
+      serializableCheck: false,
+    }).concat(api.middleware),
 });
 
 export const persistor = persistStore(store);
