@@ -26,15 +26,15 @@ export default function ProductCard({ product }: Props) {
       <img
         src={product.image}
         alt={product.name}
-        className="w-full h-48"
+        className="w-full h-48 object-cover rounded-md"
       />
-      <h2 className="text-lg font-semibold">{product.name}</h2>
-      <p className="text-gray-600 text-sm">{product.description}</p>
-      <div className="flex items-center justify-between">
+      <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
+      <p className="text-gray-600 mt-1 text-sm line-clamp-2">{product.description}</p>
+      <div className="flex items-center justify-between mt-auto pt-4">
         <span className="text-lg font-bold text-blue-600">{product.price} ₸</span>
         <button
           onClick={handleAddToCart}
-          className="bg-blue-500 text-white px-4 py-1 rounded"
+          className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600 transition"
         >
           В корзину
         </button>
