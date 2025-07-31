@@ -3,6 +3,7 @@
 import ProductCard from './ProductCard';
 import { useSearchParams } from 'next/navigation';
 import FilterPanel from './FilterPanel';
+import SearchBar from './SearchBar';
 
 import { useGetProductsQuery } from '@/services/api';
 import { toast } from 'react-toastify';
@@ -21,6 +22,8 @@ export default function ProductList() {
   const [page, setPage] = useState(1);
   const offset = (page - 1) * limit;
 
+  const search = searchParams.get('search')?.toLowerCase() || '';
+
   const { data: products, isLoading, error } = useGetProductsQuery({ limit, offset });
 
   if (isLoading) return <div>Загрузка товаров</div>;
@@ -34,11 +37,14 @@ export default function ProductList() {
     const matchMin = isNaN(minPrice) || product.price >= minPrice;
     const matchMax = isNaN(maxPrice) || product.price <= maxPrice;
     const matchStock = inStock ? product.inStock === true : true;
-    return matchCategory && matchMin && matchMax && matchStock;
+
+    const matchSearch = search ? product.name.toLowerCase().includes(search) : true;
+    return matchCategory && matchMin && matchMax && matchStock && matchSearch;
   });
 
   return (
     <div>
+      <SearchBar />
       <FilterPanel />
       {/*choose how many products are shown*/}
       <div className="mb-4">

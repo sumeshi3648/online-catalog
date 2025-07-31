@@ -11,7 +11,10 @@ export const api = createApi({
     getProductById: builder.query<Product, number>({
       query: (id) => `products/${id}`,
     }),
+    getProductSuggestions: builder.query<Product[], string>({
+      query: (search) => `products?name_like=${search}`,
+    }),
   }),
 });
 
-export const { useGetProductsQuery, useGetProductByIdQuery } = api;
+export const { useGetProductsQuery, useGetProductByIdQuery, useGetProductSuggestionsQuery } = api;
