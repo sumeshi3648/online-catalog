@@ -1,24 +1,37 @@
 'use client';
 
-import { useGetProductsQuery } from '@/services/api';
-import ProductDetail from '@/components/product/ProductDetail';
 import { useParams } from 'next/navigation';
+import { useGetProductByIdQuery } from '@/services/api';
+import ProductDetail from '@/components/product/ProductDetail';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 export default function ProductPage() {
-  const { id } = useParams();
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const params = useParams();
+  const id = Number(params.id);
 
-  if (isLoading) return <div className="text-center py-10">Загрузка товара...</div>;
-  if (error) return <div className="text-center text-red-500 py-10">Ошибка загрузки товара</div>;
+  const { data: product, isLoading, error } = useGetProductByIdQuery(id);
 
-  const product = products?.find((p) => p.id === Number(id));
+  useEffect(() => {
+    if (error) {
+      toast.error('Ошибка при загрузке товара');
+    }
+  }, [error]);
 
-  if (!product) {
+  useEffect(() => {
+  }, [product]);
+
+  if (isLoading) {
+    return <div className="text-center py-10">Загрузка...</div>;
+  }
+
+  if (error || !product) {
+    toast.error('Ошибка при загрузке товара');
     return <div className="text-center text-red-500 py-10">Товар не найден</div>;
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-10">
+    <div className="container mx-auto px-4 py-8">
       <ProductDetail product={product} />
     </div>
   );
