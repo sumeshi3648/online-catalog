@@ -4,7 +4,6 @@ import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'Каталог товаров',
-  description: 'Интерактивный каталог с корзиной и фильтрами',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
